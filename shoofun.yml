@@ -4,6 +4,20 @@ info:
   version: '1.0'
 servers:
   - url: 'localhost:5000'
+
+components:
+  schemas:
+    CommonResponse:
+      type: object
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+
 paths:
   /register:
     post:
@@ -41,12 +55,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  message:
-                    type: string
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'success'
                 message: 'Successfully registered a new account'
@@ -55,12 +64,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  message:
-                    type: string
+                $ref: '#/components/schemas/CommonResponse'
               examples:
                 'Account already exist':
                   value:
@@ -96,12 +100,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  message:
-                    type: string
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'success'
                 message: 'Successfully login'
@@ -110,14 +109,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  message:
-                    type: string
+                $ref: '#/components/schemas/CommonResponse'
               examples:
-                'Account doesn''t exist':
+                "Account doesn't exist":
                   value:
                     status: 'fail'
                     message: "Account doesn't exist"
