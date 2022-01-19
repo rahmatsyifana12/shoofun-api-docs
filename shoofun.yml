@@ -7,7 +7,7 @@ servers:
 
 components:
   schemas:
-    response:
+    commonResponse:
       type: object
       properties:
         status:
@@ -29,7 +29,7 @@ paths:
                   type: string
                 email:
                   type: string
-                phone number:
+                phoneNumber:
                   type: string
                 password:
                   type: string
@@ -39,11 +39,11 @@ paths:
                 - 'username'
                 - 'email'
                 - 'password'
-                - 'phone number'
+                - 'phoneNumber'
             example:
               username: 'rikudou'
               email: 'rikudou@gmail.com'
-              phone number: '08123456789'
+              phoneNumber: '08123456789'
               password: 'rikudou123'
       responses:
         '200':
@@ -51,7 +51,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/response'
+                $ref: '#/components/schemas/commonResponse'
               example:
                 status: 'success'
                 message: 'Successfully registered a new account'   
@@ -60,7 +60,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/response'
+                $ref: '#/components/schemas/commonResponse'
               examples:
                 Account already exist:
                   value:
@@ -95,7 +95,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/response'
+                $ref: '#/components/schemas/commonResponse'
               example:
                 status: 'success'
                 message: 'Successfully login'   
@@ -104,7 +104,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/response'
+                $ref: '#/components/schemas/commonResponse'
               examples:
                 Account doesn't exist:
                   value:
