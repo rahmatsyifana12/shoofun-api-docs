@@ -316,9 +316,50 @@ paths:
               example:
                 status: 'fail'
                 message: 'Unexpected server error'        
-
-          
-                 
+  /logout:
+    delete:
+      summary: 'Logout from current account'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+              required:
+                - 'token'
+            example:
+              token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdWxsTmFtZSI6IkpvaG4gRG9lIiwiZW1haWwiOiJqb2huZG9lQGdtYWlsLmNvbSIsImlhdCI6MTY0MjI2NjM1MiwiZXhwIjoxNjQyMjY5OTUyfQ.VUAfuLFOraawRVngtUX0TX7g6l-ubMKQfCSv-7AVn9k'
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonResponse'
+              example:
+                status: 'success'
+                message: 'Logged out of session successfully'
+        '401':
+          description: 'User doesn''t have the session'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonResponse'
+              example:
+                status: 'fail'
+                message: 'You don''t have the account session'        
+        '500':
+          description: 'Server error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonResponse'
+              example:
+                status: 'fail'
+                message: 'Unexpected server error'         
 
 
 
