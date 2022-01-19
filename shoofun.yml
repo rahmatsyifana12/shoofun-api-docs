@@ -19,7 +19,7 @@ paths:
                   type: string
                 email:
                   type: string
-                phone number:
+                phoneNumber:
                   type: string
                 password:
                   type: string
@@ -29,7 +29,7 @@ paths:
                 - 'username'
                 - 'email'
                 - 'password'
-                - 'phone number'
+                - 'phoneNumber'
             example:
               username: 'rikudou'
               email: 'rikudou@gmail.com'
@@ -62,11 +62,11 @@ paths:
                   message:
                     type: string
               examples:
-                Account already exist:
+                'Account already exist':
                   value:
                     status: 'fail'
                     message: 'This account is already exist'
-                Invalid object:
+                'Invalid object':
                   value:
                     status: 'fail'
                     message: 'Object or value is invalid'
@@ -117,11 +117,11 @@ paths:
                   message:
                     type: string
               examples:
-                Account doesn't exist:
+                'Account doesn''t exist':
                   value:
                     status: 'fail'
                     message: "Account doesn't exist"
-                Invalid object:
+                'Invalid object':
                   value:
                     status: 'fail'
                     message: 'Object or value is invalid'
