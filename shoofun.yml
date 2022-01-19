@@ -52,6 +52,8 @@ paths:
               properties:
                 username:
                   type: string
+                displayName:
+                  type: string
                 email:
                   type: string
                 phoneNumber:
@@ -60,17 +62,19 @@ paths:
                   type: string
               required:
                 - 'username'
+                - 'displayName'
                 - 'email'
                 - 'password'
                 - 'phoneNumber'
             example:
               username: 'rikudou'
+              displayName: 'Rikudou Sennin'
               email: 'rikudou@gmail.com'
               phoneNumber: '08123456789'
               password: 'rikudou123'
       responses:
         '200':
-          description: OK
+          description: 'OK'
           content:
             application/json:
               schema:
@@ -79,7 +83,7 @@ paths:
                 status: 'success'
                 message: 'Successfully registered a new account'   
         '400':
-          description: Bad request
+          description: 'Bad request'
           content:
             application/json:
               schema:
@@ -115,7 +119,7 @@ paths:
               password: 'rikudou123'
       responses:
         '200':
-          description: OK
+          description: 'OK'
           content:
             application/json:
               schema:
@@ -124,7 +128,7 @@ paths:
                 status: 'success'
                 message: 'Successfully login'   
         '400':
-          description: Bad request
+          description: 'Bad request'
           content:
             application/json:
               schema:
@@ -250,7 +254,68 @@ paths:
               example:
                 status: 'fail'
                 message: 'Unexpected server error'
-
+  /profile:
+    patch:
+      summary: 'Edit user profile'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                displayName:
+                  type: string
+                email:
+                  type: string
+                phoneNumber:
+                  type: string
+                oldPassword:
+                  type: string
+                newPassword:
+                  type: string
+            example:
+              displayName: 'Father of Shinobi'
+              email: 'rikudou_sen@gmail.com'
+              oldPassword: 'rikudou123'
+              newPassword: 'rikudou@sensei'
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonResponse'
+              example:
+                status: 'success'
+                message: 'User profile successfully updated'
+        '400':
+          description: 'Bad request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonResponse'
+              example:
+                status: 'fail'
+                message: 'Invalid user object'
+        '401':
+          description: 'User doesn''t have the session'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonResponse'
+              example:
+                status: 'fail'
+                message: 'You don''t have the account session'        
+        '500':
+          description: 'Server error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonResponse'
+              example:
+                status: 'fail'
+                message: 'Unexpected server error'        
 
           
                  
