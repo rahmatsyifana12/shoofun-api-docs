@@ -4,6 +4,17 @@ info:
   version: '1.0'
 servers:
   - url: 'localhost:5000'
+
+components:
+  schemas:
+    response:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+
 paths:
   /register:
     post:
@@ -40,12 +51,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  message:
-                    type: string
+                $ref: '#/components/schemas/response'
               example:
                 status: 'success'
                 message: 'Successfully registered a new account'   
@@ -54,12 +60,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  message:
-                    type: string
+                $ref: '#/components/schemas/response'
               examples:
                 Account already exist:
                   value:
@@ -94,12 +95,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  message:
-                    type: string
+                $ref: '#/components/schemas/response'
               example:
                 status: 'success'
                 message: 'Successfully login'   
@@ -108,12 +104,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  message:
-                    type: string
+                $ref: '#/components/schemas/response'
               examples:
                 Account doesn't exist:
                   value:
@@ -123,3 +114,4 @@ paths:
                   value:
                     status: 'fail'
                     message: 'Object or value is invalid'
+  
