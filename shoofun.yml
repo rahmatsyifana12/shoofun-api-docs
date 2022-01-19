@@ -18,6 +18,27 @@ components:
         - 'status'
         - 'message'
 
+    product:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: integer
+        description:
+          type: string
+        quantityPurchased:
+          type: integer
+      required:
+        - 'id'
+        - 'name'
+        - 'price'
+        - 'description'
+        - 'quantityPurchased'
+
+
 paths:
   /register:
     post:
@@ -74,7 +95,7 @@ paths:
                     message: 'Object or value is invalid' 
   /login:
     post:
-      summary: 'For user to login'
+      summary: 'Login user'
       requestBody:
         required: true
         content:
@@ -119,7 +140,7 @@ paths:
                     message: 'Object or value is invalid'
   /products:
     get:
-      summary: Show all products
+      summary: 'Get all products'
       responses:
         '200':
           description: 'OK'
@@ -142,14 +163,14 @@ paths:
                 message: 'Found all products'
                 products: [
                   {
-                    id: 0123,
+                    id: 123,
                     name: 'Macbook',
                     price: 18000000,
                     description: 'Expensive laptop',
                     quantityPurchased: 102
                   },
                   {
-                    id: 0124,
+                    id: 124,
                     name: 'Asus ROG',
                     price: 15000000,
                     description: 'Built for gamers',
@@ -174,6 +195,65 @@ paths:
               example:
                 status: 'fail'
                 message: 'Unexpected server error'
-                
+  /products/{productId}:
+    get:
+      summary: 'Get product by id' 
+      parameters:
+        - in: path
+          name: productId
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: 
+                    type: string
+                  message:
+                    type: string
+                  product:
+                    $ref: '#/components/schemas/product'
+                required:
+                  - 'status'
+                  - 'message'
+                  - 'product'
+              example:
+                status: 'success'
+                message: 'Product found'
+                product: {
+                  id: 124,
+                  name: 'Asus ROG',
+                  price: 15000000,
+                  description: 'Built for gamers',
+                  quantityPurchased: 84
+                }
+        '404':
+          description: 'Product not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonResponse'
+              example:
+                status: 'fail'
+                message: 'Product not found'
+        '500':
+          description: 'Server error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonResponse'
+              example:
+                status: 'fail'
+                message: 'Unexpected server error'
+
+
+          
+                 
+
 
 
