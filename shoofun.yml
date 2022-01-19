@@ -20,6 +20,7 @@ paths:
     post:
       summary: 'For register user'
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -74,6 +75,7 @@ paths:
     post:
       summary: 'For login user'
       requestBody:
+        required: true
         content:
           application/json:
             schema:
