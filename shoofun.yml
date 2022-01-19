@@ -14,6 +14,9 @@ components:
           type: string
         message:
           type: string
+      required:
+        - 'status'
+        - 'message'
 
 paths:
   /register:
@@ -34,8 +37,6 @@ paths:
                   type: string
                 password:
                   type: string
-                receipt:
-                  type: array
               required:
                 - 'username'
                 - 'email'
@@ -63,11 +64,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/commonResponse'
               examples:
-                Account already exist:
+                'Account already exist':
                   value:
                     status: 'fail'
                     message: 'This account is already exist'    
-                Invalid object:
+                'Invalid object':
                   value:
                     status: 'fail'
                     message: 'Object or value is invalid' 
@@ -108,11 +109,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/commonResponse'
               examples:
-                Account doesn't exist:
+                'Account doesn''t exist':
                   value:
                     status: 'fail'
                     message: 'Account doesn''t exist'    
-                Invalid object:
+                'Invalid object':
                   value:
                     status: 'fail'
                     message: 'Object or value is invalid'
