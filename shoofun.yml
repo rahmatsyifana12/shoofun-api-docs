@@ -9,6 +9,7 @@ paths:
     post:
       summary: 'For register user'
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -48,7 +49,7 @@ paths:
                     type: string
               example:
                 status: 'success'
-                message: 'Successfully registered a new account'   
+                message: 'Successfully registered a new account'
         '400':
           description: Bad request
           content:
@@ -64,15 +65,16 @@ paths:
                 Account already exist:
                   value:
                     status: 'fail'
-                    message: 'This account is already exist'    
+                    message: 'This account is already exist'
                 Invalid object:
                   value:
                     status: 'fail'
-                    message: 'Object or value is invalid' 
+                    message: 'Object or value is invalid'
   /login:
     post:
       summary: 'For login user'
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -102,7 +104,7 @@ paths:
                     type: string
               example:
                 status: 'success'
-                message: 'Successfully login'   
+                message: 'Successfully login'
         '400':
           description: Bad request
           content:
@@ -118,7 +120,7 @@ paths:
                 Account doesn't exist:
                   value:
                     status: 'fail'
-                    message: 'Account doesn''t exist'    
+                    message: "Account doesn't exist"
                 Invalid object:
                   value:
                     status: 'fail'
