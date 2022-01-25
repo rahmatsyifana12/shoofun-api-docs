@@ -162,6 +162,100 @@ paths:
               example:
                 status: 'fail'
                 message: 'Unexpected server error'
+  /{productId}:
+    post:
+      summary: 'Add product to cart'
+      parameters:
+        - in: path
+          name: productId
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/product'
+            example:
+              id: 123,
+              name: 'Macbook'
+              price: 18000000
+              description: 'Expensive laptop'
+              totalPurchase: 102
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonResponse'
+              example:
+                status: 'success'
+                message: 'Successfully added product to cart'
+        '500':
+          description: 'Server error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonResponse'
+              example:
+                status: 'fail'
+                message: 'Unexpected server error'
+  /products/add:
+    post:
+      summary: 'Add a new product'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: integer
+                description:
+                  type: string
+                quantityPurchased:
+                  type: integer
+              required:
+                - 'name'
+                - 'price'
+                - 'description'
+            example:
+              name: 'Asus ROG'
+              price: 15000000
+              description: 'Built for gamers'
+      responses:  
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonResponse'
+              example:
+                status: 'success'
+                message: 'Successfully added a new product'
+        '400':
+          description: 'Bad request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonResponse'
+              example:
+                status: 'fail'
+                message: 'Object or value is invalid'
+        '500':
+          description: 'Server error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonResponse'
+              example:
+                status: 'fail'
+                message: 'Unexpected server error'
   /products:
     get:
       summary: 'Get all products'
@@ -274,51 +368,63 @@ paths:
               example:
                 status: 'fail'
                 message: 'Unexpected server error'
-  /products/add:
-    post:
-      summary: 'Add a new product'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                price:
-                  type: integer
-                description:
-                  type: string
-                quantityPurchased:
-                  type: integer
-              required:
-                - 'name'
-                - 'price'
-                - 'description'
-            example:
-              name: 'Asus ROG'
-              price: 15000000
-              description: 'Built for gamers'
-      responses:  
+  /cart:
+    get:
+      summary: 'Get all products in cart'
+      responses:
         '200':
           description: 'OK'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                type: object
+                properties:
+                  status: 
+                    type: string
+                  message:
+                    type: string
+                  products:
+                    type: array
+                required:
+                  - 'status'
+                  - 'message'
               example:
                 status: 'success'
-                message: 'Successfully added a new product'
-        '400':
-          description: 'Bad request'
+                message: 'Found all products in cart'
+                products: [
+                  {
+                    id: 123,
+                    name: 'Macbook',
+                    price: 18000000,
+                    description: 'Expensive laptop',
+                    quantity: 1
+                  },
+                  {
+                    id: 124,
+                    name: 'Asus ROG',
+                    price: 15000000,
+                    description: 'Built for gamers',
+                    quantity: 2
+                  }
+                ]
+        '404':
+          description: 'Product not found'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/commonResponse'
               example:
                 status: 'fail'
-                message: 'Object or value is invalid'
+                message: 'Product not found'
+        '500':
+          description: 'Server error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonResponse'
+              example:
+                status: 'fail'
+                message: 'Unexpected server error'
   /profile:
     patch:
       summary: 'Edit user profile'
@@ -417,63 +523,6 @@ paths:
               example:
                 status: 'fail'
                 message: 'You don''t have the account session'
-        '500':
-          description: 'Server error'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/commonResponse'
-              example:
-                status: 'fail'
-                message: 'Unexpected server error'
-  /cart:
-    get:
-      summary: 'Get all products in cart'
-      responses:
-        '200':
-          description: 'OK'
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status: 
-                    type: string
-                  message:
-                    type: string
-                  products:
-                    type: array
-                required:
-                  - 'status'
-                  - 'message'
-              example:
-                status: 'success'
-                message: 'Found all products in cart'
-                products: [
-                  {
-                    id: 123,
-                    name: 'Macbook',
-                    price: 18000000,
-                    description: 'Expensive laptop',
-                    quantity: 1
-                  },
-                  {
-                    id: 124,
-                    name: 'Asus ROG',
-                    price: 15000000,
-                    description: 'Built for gamers',
-                    quantity: 2
-                  }
-                ]
-        '404':
-          description: 'Product not found'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/commonResponse'
-              example:
-                status: 'fail'
-                message: 'Product not found'
         '500':
           description: 'Server error'
           content:
