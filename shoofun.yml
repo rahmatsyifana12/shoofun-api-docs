@@ -274,6 +274,51 @@ paths:
               example:
                 status: 'fail'
                 message: 'Unexpected server error'
+  /products/add:
+    post:
+      summary: 'Add a new product'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: integer
+                description:
+                  type: string
+                quantityPurchased:
+                  type: integer
+              required:
+                - 'name'
+                - 'price'
+                - 'description'
+            example:
+              name: 'Asus ROG'
+              price: 15000000
+              description: 'Built for gamers'
+      responses:  
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonResponse'
+              example:
+                status: 'success'
+                message: 'Successfully added a new product'
+        '400':
+          description: 'Bad request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonResponse'
+              example:
+                status: 'fail'
+                message: 'Object or value is invalid'
   /profile:
     patch:
       summary: 'Edit user profile'
@@ -438,48 +483,3 @@ paths:
               example:
                 status: 'fail'
                 message: 'Unexpected server error'
-  /products/add:
-    post:
-      summary: 'Add a new product'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                price:
-                  type: integer
-                description:
-                  type: string
-                quantityPurchased:
-                  type: integer
-              required:
-                - 'name'
-                - 'price'
-                - 'description'
-            example:
-              name: 'Asus ROG'
-              price: 15000000
-              description: 'Built for gamers'
-      responses:  
-        '200':
-          description: 'OK'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/commonResponse'
-              example:
-                status: 'success'
-                message: 'Successfully added a new product'
-        '400':
-          description: 'Bad request'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/commonResponse'
-              example:
-                status: 'fail'
-                message: 'Object or value is invalid'
