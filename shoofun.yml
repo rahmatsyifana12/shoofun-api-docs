@@ -218,8 +218,6 @@ paths:
                   type: integer
                 description:
                   type: string
-                quantityPurchased:
-                  type: integer
               required:
                 - 'name'
                 - 'price'
@@ -237,7 +235,7 @@ paths:
                 $ref: '#/components/schemas/commonResponse'
               example:
                 status: 'success'
-                message: 'Successfully added a new product'
+                message: 'Added new product successfully'
         '400':
           description: 'Bad request'
           content:
