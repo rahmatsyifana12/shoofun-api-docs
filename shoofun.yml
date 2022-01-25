@@ -532,3 +532,54 @@ paths:
               example:
                 status: 'fail'
                 message: 'Unexpected server error'
+  /cart/{productId}:
+    delete:
+      summary: 'Remove product from cart'
+      parameters:
+        - in: path
+          name: productId
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productId:
+                 type: integer
+              required:
+                - 'productId'
+            example:
+              productId: 124
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonResponse'
+              example:
+                status: 'success'
+                message: 'Product removed successfully'
+        '401':
+          description: 'Product doesn''t exist'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonResponse'
+              example:
+                status: 'fail'
+                message: 'Product doesn''t exist'
+        '500':
+          description: 'Server error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonResponse'
+              example:
+                status: 'fail'
+                message: 'Unexpected server error'
+          
