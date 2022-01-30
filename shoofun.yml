@@ -176,13 +176,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/product'
+              type: object
+              properties:
+                productId:
+                  type: integer
+              required:
+                - productId
             example:
-              id: 123,
-              name: 'Macbook'
-              price: 18000000
-              description: 'Expensive laptop'
-              totalPurchase: 102
+              productId: 123
       responses:
         '200':
           description: 'OK'
