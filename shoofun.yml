@@ -373,7 +373,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  status: 
+                  status:
                     type: string
                   message:
                     type: string
@@ -403,6 +403,15 @@ paths:
                     quantity: 2
                   }
                 ]
+        '401':
+          description: 'Authorization error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonResponse'
+              example:
+                status: 'fail'
+                message: 'Authorization error'
         '500':
           description: 'Server error'
           content:
@@ -526,14 +535,14 @@ paths:
                 status: 'success'
                 message: 'Product removed successfully'
         '401':
-          description: 'Product doesn''t exist'
+          description: 'Authorization error'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/commonResponse'
               example:
                 status: 'fail'
-                message: 'Product doesn''t exist'
+                message: 'Authorization error'
         '500':
           description: 'Server error'
           content:
