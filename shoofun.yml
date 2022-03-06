@@ -171,6 +171,8 @@ paths:
   /{productId}:
     post:
       summary: 'Add product to cart'
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: productId
@@ -518,6 +520,9 @@ paths:
   /cart/{productId}:
     delete:
       summary: 'Remove product from cart'
+      security:
+        - bearerAuth: []
+      
       parameters:
         - in: path
           name: productId
