@@ -40,6 +40,12 @@ components:
         - 'description'
         - 'totalPurchase'
 
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'JWT authentication'
 
 paths:
   /register:
@@ -171,19 +177,6 @@ paths:
           schema:
             type: integer
           required: true
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                productId:
-                  type: integer
-              required:
-                - productId
-            example:
-              productId: 123
       responses:
         '200':
           description: 'OK'
@@ -410,15 +403,6 @@ paths:
                     quantity: 2
                   }
                 ]
-        '404':
-          description: 'Product not found'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/commonResponse'
-              example:
-                status: 'fail'
-                message: 'Product not found'
         '500':
           description: 'Server error'
           content:
