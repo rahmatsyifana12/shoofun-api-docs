@@ -478,19 +478,6 @@ paths:
   /logout:
     delete:
       summary: 'Logout from current account'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                token:
-                  type: string
-              required:
-                - 'token'
-            example:
-              token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdWxsTmFtZSI6IkpvaG4gRG9lIiwiZW1haWwiOiJqb2huZG9lQGdtYWlsLmNvbSIsImlhdCI6MTY0MjI2NjM1MiwiZXhwIjoxNjQyMjY5OTUyfQ.VUAfuLFOraawRVngtUX0TX7g6l-ubMKQfCSv-7AVn9k'
       responses:
         '200':
           description: 'OK'
@@ -528,19 +515,6 @@ paths:
           schema:
             type: integer
           required: true
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                productId:
-                 type: integer
-              required:
-                - 'productId'
-            example:
-              productId: 124
       responses:
         '200':
           description: 'OK'
