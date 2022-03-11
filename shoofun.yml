@@ -7,7 +7,43 @@ servers:
 
 components:
   schemas:
-    commonResponse:
+    UserLogin:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - 'email'
+        - 'password'
+      example:
+        email: 'rikudou@gmail.com'
+        password: 'rikudou123'
+
+    UserRegister:
+      allOf:
+        - $ref: '#/components/schemas/UserLogin'
+        - type: object
+          properties:
+            username:
+              type: string
+            displayName:
+              type: string
+            phoneNumber:
+              type: string
+          required:
+            - 'username'
+            - 'displayName'
+            - 'phoneNumber'
+          example:
+            username: 'rikudou'
+            displayName: 'Rikudou Sennin'
+            email: 'rikudou@gmail.com'
+            phoneNumber: '08123456789'
+            password: 'rikudou123'
+
+    CommonResponse:
       type: object
       properties:
         status:
@@ -18,7 +54,7 @@ components:
         - 'status'
         - 'message'
 
-    product:
+    Product:
       type: object
       properties:
         id:
@@ -56,37 +92,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                displayName:
-                  type: string
-                email:
-                  type: string
-                phoneNumber:
-                  type: string
-                password:
-                  type: string
-              required:
-                - 'username'
-                - 'displayName'
-                - 'email'
-                - 'password'
-                - 'phoneNumber'
-            example:
-              username: 'rikudou'
-              displayName: 'Rikudou Sennin'
-              email: 'rikudou@gmail.com'
-              phoneNumber: '08123456789'
-              password: 'rikudou123'
+              $ref: '#/components/schemas/UserRegister'
       responses:
         '200':
           description: 'OK'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'success'
                 message: 'Successfully registered a new account'
@@ -95,7 +108,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               examples:
                 'Account already exist':
                   value:
@@ -110,7 +123,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'fail'
                 message: 'Unexpected server error'
@@ -122,25 +135,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                password:
-                  type: string
-              required:
-                - 'email'
-                - 'password'
-            example:
-              email: 'rikudou@gmail.com'
-              password: 'rikudou123'
+              $ref: '#/components/schemas/UserLogin'
       responses:
         '200':
           description: 'OK'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'success'
                 message: 'Successfully login'
@@ -149,12 +151,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               examples:
-                'Account doesn''t exist':
+                "Account doesn't exist":
                   value:
                     status: 'fail'
-                    message: 'Account doesn''t exist'
+                    message: "Account doesn''t exist"
                 'Invalid object':
                   value:
                     status: 'fail'
@@ -164,7 +166,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'fail'
                 message: 'Unexpected server error'
@@ -185,7 +187,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'success'
                 message: 'Successfully added product to cart'
@@ -194,7 +196,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'fail'
                 message: 'Unexpected server error'
@@ -222,13 +224,13 @@ paths:
               name: 'Asus ROG'
               price: 15000000
               description: 'Built for gamers'
-      responses:  
+      responses:
         '200':
           description: 'OK'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'success'
                 message: 'Added new product successfully'
@@ -237,7 +239,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'fail'
                 message: 'Object or value is invalid'
@@ -246,7 +248,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'fail'
                 message: 'Unexpected server error'
@@ -268,7 +270,7 @@ paths:
                   products:
                     type: array
                     items:
-                      $ref: '#/components/schemas/product'
+                      $ref: '#/components/schemas/Product'
                 required:
                   - 'status'
                   - 'message'
@@ -296,7 +298,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'fail'
                 message: 'Product not found'
@@ -305,7 +307,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'fail'
                 message: 'Unexpected server error'
@@ -331,7 +333,7 @@ paths:
                   message:
                     type: string
                   product:
-                    $ref: '#/components/schemas/product'
+                    $ref: '#/components/schemas/Product'
                 required:
                   - 'status'
                   - 'message'
@@ -351,7 +353,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'fail'
                 message: 'Product not found'
@@ -360,7 +362,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'fail'
                 message: 'Unexpected server error'
@@ -382,7 +384,7 @@ paths:
                   products:
                     type: array
                     items:
-                      $ref: '#/components/schemas/product'
+                      $ref: '#/components/schemas/Product'
                 required:
                   - 'status'
                   - 'message'
@@ -410,7 +412,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'fail'
                 message: 'Authorization error'
@@ -419,7 +421,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'fail'
                 message: 'Unexpected server error'
@@ -455,7 +457,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'success'
                 message: 'User profile successfully updated'
@@ -464,7 +466,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'fail'
                 message: 'Invalid user object'
@@ -473,7 +475,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'fail'
                 message: 'You don''t have the account session'
@@ -482,7 +484,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'fail'
                 message: 'Unexpected server error'
@@ -495,7 +497,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'success'
                 message: 'Logged out of session successfully'
@@ -504,7 +506,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'fail'
                 message: 'You don''t have the account session'
@@ -513,7 +515,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'fail'
                 message: 'Unexpected server error'
@@ -522,7 +524,7 @@ paths:
       summary: 'Remove product from cart'
       security:
         - bearerAuth: []
-      
+
       parameters:
         - in: path
           name: productId
@@ -535,7 +537,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'success'
                 message: 'Product removed successfully'
@@ -544,7 +546,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'fail'
                 message: 'Authorization error'
@@ -553,7 +555,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/commonResponse'
+                $ref: '#/components/schemas/CommonResponse'
               example:
                 status: 'fail'
                 message: 'Unexpected server error'
