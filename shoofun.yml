@@ -24,7 +24,7 @@ components:
             $ref: '#/components/schemas/CommonResponse'
           example:
             status: 'fail'
-            message: "You don't have the account session"
+            message: "You don't have an account session"
 
   examples:
     GetProducts:
