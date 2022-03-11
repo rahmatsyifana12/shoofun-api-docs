@@ -26,6 +26,24 @@ components:
             status: 'fail'
             message: "You don't have the account session"
 
+  examples:
+    GetProducts:
+      value:
+        status: 'success'
+        message: 'Found all products'
+        products:
+          - id: 123,
+            name: 'Macbook'
+            price: 18000000,
+            description: 'Expensive laptop'
+            totalPurchase: 102
+
+          - id: 124
+            name: 'Asus ROG'
+            price: 15000000
+            description: 'Built for gamers'
+            totalPurchase: 84
+
   schemas:
     UserLogin:
       type: object
@@ -62,6 +80,26 @@ components:
             email: 'rikudou@gmail.com'
             phoneNumber: '08123456789'
             password: 'rikudou123'
+
+    UserProfile:
+      description: 'The profile can be changed partially'
+      type: object
+      properties:
+        displayName:
+          type: string
+        email:
+          type: string
+        phoneNumber:
+          type: string
+        oldPassword:
+          type: string
+        newPassword:
+          type: string
+      example:
+        displayName: 'Father of Shinobi'
+        email: 'rikudou_sen@gmail.com'
+        oldPassword: 'rikudou123'
+        newPassword: 'rikudou@sensei'
 
     CommonResponse:
       type: object
@@ -257,38 +295,18 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  message:
-                    type: string
-                  products:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Product'
-                required:
-                  - 'status'
-                  - 'message'
-              example:
-                status: 'success'
-                message: 'Found all products'
-                products: [
-                  {
-                    id: 123,
-                    name: 'Macbook',
-                    price: 18000000,
-                    description: 'Expensive laptop',
-                    totalPurchase: 102
-                  },
-                  {
-                    id: 124,
-                    name: 'Asus ROG',
-                    price: 15000000,
-                    description: 'Built for gamers',
-                    totalPurchase: 84
-                  }
-                ]
+                allOf:
+                  - $ref: '#/components/schemas/CommonResponse'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Product'
+                    required:
+                      - products
+              examples:
+                'Get All Products':
+                  $ref: '#/components/examples/GetProducts'
         '404':
           description: 'Product not found'
           content:
@@ -306,9 +324,10 @@ paths:
       parameters:
         - in: path
           name: productId
+          description: 'The product ID to be viewed'
+          required: true
           schema:
             type: integer
-          required: true
       responses:
         '200':
           description: 'OK'
@@ -330,13 +349,12 @@ paths:
               example:
                 status: 'success'
                 message: 'Product found'
-                product: {
-                  id: 124,
-                  name: 'Asus ROG',
-                  price: 15000000,
-                  description: 'Built for gamers',
-                  quantityPurchased: 84
-                }
+                product:
+                  - id: 124
+                    name: 'Asus ROG'
+                    price: 15000000
+                    description: 'Built for gamers'
+                    quantityPurchased: 84
         '404':
           description: 'Product not found'
           content:
@@ -401,24 +419,7 @@ paths:
         content:
           application/json:
             schema:
-              description: 'The profile can be changed partially'
-              type: object
-              properties:
-                displayName:
-                  type: string
-                email:
-                  type: string
-                phoneNumber:
-                  type: string
-                oldPassword:
-                  type: string
-                newPassword:
-                  type: string
-            example:
-              displayName: 'Father of Shinobi'
-              email: 'rikudou_sen@gmail.com'
-              oldPassword: 'rikudou123'
-              newPassword: 'rikudou@sensei'
+              $ref: '#/components/schemas/UserProfile'
       responses:
         '200':
           description: 'OK'
