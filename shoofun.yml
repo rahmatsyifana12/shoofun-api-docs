@@ -214,6 +214,60 @@ paths:
                     message: 'Object or value is invalid'
         '500':
           $ref: '#/components/responses/ServerError'
+  /logout:
+    delete:
+      summary: 'Logout from current account by using the JWT token'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              example:
+                status: 'success'
+                message: 'Logged out of session successfully'
+        '401':
+          $ref: '#/components/responses/NoAccountSession'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /profile:
+    patch:
+      summary: 'Edit user profile'
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              example:
+                status: 'success'
+                message: 'User profile successfully updated'
+        '400':
+          description: 'Bad request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              example:
+                status: 'fail'
+                message: 'Invalid user object'
+        '401':
+          $ref: '#/components/responses/NoAccountSession'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
   /{productId}:
     post:
       summary: 'Add product to cart'
@@ -242,6 +296,8 @@ paths:
   /products/add:
     post:
       summary: 'Add a new product'
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -369,6 +425,8 @@ paths:
   /cart:
     get:
       summary: 'Get all products in cart'
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: 'OK'
@@ -411,61 +469,11 @@ paths:
           $ref: '#/components/responses/NoAccountSession'
         '500':
           $ref: '#/components/responses/ServerError'
-  /profile:
-    patch:
-      summary: 'Edit user profile'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserProfile'
-      responses:
-        '200':
-          description: 'OK'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CommonResponse'
-              example:
-                status: 'success'
-                message: 'User profile successfully updated'
-        '400':
-          description: 'Bad request'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CommonResponse'
-              example:
-                status: 'fail'
-                message: 'Invalid user object'
-        '401':
-          $ref: '#/components/responses/NoAccountSession'
-        '500':
-          $ref: '#/components/responses/ServerError'
-  /logout:
-    delete:
-      summary: 'Logout from current account'
-      responses:
-        '200':
-          description: 'OK'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CommonResponse'
-              example:
-                status: 'success'
-                message: 'Logged out of session successfully'
-        '401':
-          $ref: '#/components/responses/NoAccountSession'
-        '500':
-          $ref: '#/components/responses/ServerError'
   /cart/{productId}:
     delete:
       summary: 'Remove product from cart'
       security:
         - bearerAuth: []
-
       parameters:
         - in: path
           name: productId
