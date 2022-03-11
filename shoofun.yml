@@ -6,6 +6,26 @@ servers:
   - url: 'localhost:5000'
 
 components:
+  responses:
+    ServerError:
+      description: 'An error that was caused by the internal server'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CommonResponse'
+          example:
+            status: 'fail'
+            message: 'Unexpected server error'
+    NoAccountSession:
+      description: "User doesn't have any account session"
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CommonResponse'
+          example:
+            status: 'fail'
+            message: "You don't have the account session"
+
   schemas:
     UserLogin:
       type: object
@@ -119,14 +139,7 @@ paths:
                     status: 'fail'
                     message: 'Object or value is invalid'
         '500':
-          description: 'Server error'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CommonResponse'
-              example:
-                status: 'fail'
-                message: 'Unexpected server error'
+          $ref: '#/components/responses/ServerError'
   /login:
     post:
       summary: 'Login user'
@@ -162,14 +175,7 @@ paths:
                     status: 'fail'
                     message: 'Object or value is invalid'
         '500':
-          description: 'Server error'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CommonResponse'
-              example:
-                status: 'fail'
-                message: 'Unexpected server error'
+          $ref: '#/components/responses/ServerError'
   /{productId}:
     post:
       summary: 'Add product to cart'
@@ -191,15 +197,10 @@ paths:
               example:
                 status: 'success'
                 message: 'Successfully added product to cart'
+        '401':
+          $ref: '#/components/responses/NoAccountSession'
         '500':
-          description: 'Server error'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CommonResponse'
-              example:
-                status: 'fail'
-                message: 'Unexpected server error'
+          $ref: '#/components/responses/ServerError'
   /products/add:
     post:
       summary: 'Add a new product'
@@ -243,15 +244,10 @@ paths:
               example:
                 status: 'fail'
                 message: 'Object or value is invalid'
+        '401':
+          $ref: '#/components/responses/NoAccountSession'
         '500':
-          description: 'Server error'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CommonResponse'
-              example:
-                status: 'fail'
-                message: 'Unexpected server error'
+          $ref: '#/components/responses/ServerError'
   /products:
     get:
       summary: 'Get all products'
@@ -303,14 +299,7 @@ paths:
                 status: 'fail'
                 message: 'Product not found'
         '500':
-          description: 'Server error'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CommonResponse'
-              example:
-                status: 'fail'
-                message: 'Unexpected server error'
+          $ref: '#/components/responses/ServerError'
   /products/{productId}:
     get:
       summary: 'Get product by id'
@@ -358,14 +347,7 @@ paths:
                 status: 'fail'
                 message: 'Product not found'
         '500':
-          description: 'Server error'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CommonResponse'
-              example:
-                status: 'fail'
-                message: 'Unexpected server error'
+          $ref: '#/components/responses/ServerError'
   /cart:
     get:
       summary: 'Get all products in cart'
@@ -408,23 +390,9 @@ paths:
                   }
                 ]
         '401':
-          description: 'Authorization error'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CommonResponse'
-              example:
-                status: 'fail'
-                message: 'Authorization error'
+          $ref: '#/components/responses/NoAccountSession'
         '500':
-          description: 'Server error'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CommonResponse'
-              example:
-                status: 'fail'
-                message: 'Unexpected server error'
+          $ref: '#/components/responses/ServerError'
   /profile:
     patch:
       summary: 'Edit user profile'
@@ -471,23 +439,9 @@ paths:
                 status: 'fail'
                 message: 'Invalid user object'
         '401':
-          description: 'User doesn''t have the session'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CommonResponse'
-              example:
-                status: 'fail'
-                message: 'You don''t have the account session'
+          $ref: '#/components/responses/NoAccountSession'
         '500':
-          description: 'Server error'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CommonResponse'
-              example:
-                status: 'fail'
-                message: 'Unexpected server error'
+          $ref: '#/components/responses/ServerError'
   /logout:
     delete:
       summary: 'Logout from current account'
@@ -502,23 +456,9 @@ paths:
                 status: 'success'
                 message: 'Logged out of session successfully'
         '401':
-          description: 'User doesn''t have the session'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CommonResponse'
-              example:
-                status: 'fail'
-                message: 'You don''t have the account session'
+          $ref: '#/components/responses/NoAccountSession'
         '500':
-          description: 'Server error'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CommonResponse'
-              example:
-                status: 'fail'
-                message: 'Unexpected server error'
+          $ref: '#/components/responses/ServerError'
   /cart/{productId}:
     delete:
       summary: 'Remove product from cart'
@@ -542,20 +482,6 @@ paths:
                 status: 'success'
                 message: 'Product removed successfully'
         '401':
-          description: 'Authorization error'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CommonResponse'
-              example:
-                status: 'fail'
-                message: 'Authorization error'
+          $ref: '#/components/responses/NoAccountSession'
         '500':
-          description: 'Server error'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CommonResponse'
-              example:
-                status: 'fail'
-                message: 'Unexpected server error'
+          $ref: '#/components/responses/ServerError'
